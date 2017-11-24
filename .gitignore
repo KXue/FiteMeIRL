@@ -37,5 +37,4 @@ sysinfo.txt
 .vscode/
 
 # Project Specific
-Sandbox/*
-sandbox/*
+**/[Ss]andbox/*
