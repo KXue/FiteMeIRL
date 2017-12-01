@@ -36,8 +36,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1224561774501190}
-  m_LocalRotation: {x: 0.10053536, y: -0, z: -0, w: 0.99493355}
-  m_LocalPosition: {x: 0, y: 5, z: -10}
+  m_LocalRotation: {x: 0.08186935, y: 0.48097587, z: -0.08773096, w: 0.8684832}
+  m_LocalPosition: {x: 231.54166, y: 6.3031864, z: 138.2495}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,11 +97,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_offsetFromWall: 0.1
-  m_maxLookDownAngle: 60
-  m_defaultLookDownAngle: -15
+  m_maxLookDownAngle: 45
+  m_defaultLookDownAngle: 15
   m_rotationSpeed: 40
   m_minZoom: 0.6
-  m_maxZoom: 20
+  m_maxZoom: 10
   m_defaultZoom: 5
   m_zoomSpeed: 50
   m_pivotOffset: {x: 0.75, y: 2, z: 0}
