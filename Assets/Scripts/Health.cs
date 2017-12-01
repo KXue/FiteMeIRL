@@ -4,14 +4,25 @@ using UnityEngine.Networking;
 
 public class Health : NetworkBehaviour {
 	public const int m_maxHealth = 100;
-	public RectTransform m_healthBar;
+	public Image m_healthBar;
+	public Image m_serverHealthBar;
+	public Image m_clientHealthBar;
 	public bool m_destroyOnDeath;
+	public GameObject m_serverHealthCanvas;
+	public GameObject m_clientHealthCanvas;
+
     [SyncVar(hook = "OnChangeHealth")]
 	private int m_currentHealth = m_maxHealth;
 	private NetworkStartPosition[] m_spawnPoints;
 	void Start(){
 		if(isLocalPlayer){
 			m_spawnPoints = FindObjectsOfType<NetworkStartPosition>();
+			Destroy(m_serverHealthCanvas);
+			m_healthBar = m_clientHealthBar;
+		}
+		else{
+			Destroy(m_clientHealthCanvas);
+			m_healthBar = m_serverHealthBar;
 		}
 	}
 	public int CurrentHealth{
@@ -35,7 +46,7 @@ public class Health : NetworkBehaviour {
 	}
 	void OnChangeHealth (int health)
     {
-        m_healthBar.sizeDelta = new Vector2(health, m_healthBar.sizeDelta.y);
+        m_healthBar.fillAmount = (float)health/(float)m_maxHealth;
     }
 	[ClientRpc]
 	void RpcRespawn()

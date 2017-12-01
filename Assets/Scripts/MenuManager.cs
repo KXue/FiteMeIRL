@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-	private static GameManager instance;
+public class MenuManager : MonoBehaviour {
+	private static MenuManager instance;
     // Static singleton property
-    public static GameManager Instance
+    public static MenuManager Instance
     {
         get
         {
-            return instance ?? (instance = new GameObject("Singleton").AddComponent<GameManager>());
+            return instance ?? (instance = new GameObject("Singleton").AddComponent<MenuManager>());
         }
     }
     void Awake()

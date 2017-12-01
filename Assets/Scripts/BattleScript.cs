@@ -7,11 +7,18 @@ public class BattleScript : NetworkBehaviour {
 
 	public Transform prefab;
 	public GameObject prefabSpawnPoint;
+	public float m_bulletSpace = 0.5f;
 	public float m_fireBallSpeed = 30.0f;
 	private bool m_isAttacking = false;
 	private NetworkAnimator m_networkAnimator;
     private Animator m_animator;
     void Start() {
+		if(isLocalPlayer){
+			gameObject.layer = LayerMask.NameToLayer("Player");
+		}
+		else{
+			gameObject.layer = LayerMask.NameToLayer("Enemy");
+		}
 		m_animator = GetComponent<Animator>();
 		m_networkAnimator = GetComponent<NetworkAnimator>();
 	}
@@ -34,9 +41,9 @@ public class BattleScript : NetworkBehaviour {
     }
 	[Command]
 	void CmdAttack(Quaternion bulletRotation){
-		GameObject fireBall = Instantiate(prefab, prefabSpawnPoint.transform.position, bulletRotation).gameObject;
+		GameObject fireBall = Instantiate(prefab, prefabSpawnPoint.transform.position + transform.forward * m_bulletSpace, bulletRotation).gameObject;
         fireBall.GetComponent<Rigidbody>().velocity = fireBall.transform.forward * m_fireBallSpeed;
-
+		fireBall.GetComponent<Bullet>().SetOwner(gameObject);
         NetworkServer.Spawn(fireBall);
         Destroy(fireBall.gameObject, 2.0f);
 	}
