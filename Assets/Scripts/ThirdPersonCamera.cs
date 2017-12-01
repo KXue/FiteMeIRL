@@ -31,7 +31,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		SetCursorState(CursorLockMode.Locked);
+		// SetCursorState(CursorLockMode.Locked);
 		m_zoom = m_defaultZoom;
 		m_lastUncollidedZoom = m_defaultZoom;
 		m_lookDownAngle = m_defaultLookDownAngle;
@@ -51,7 +51,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 		m_lookDownAngle -= Input.GetAxis("Mouse Y") * m_rotationSpeed * Time.deltaTime;
 		m_zoom = Mathf.Clamp(m_zoom, m_minZoom, m_maxZoom);
 		m_lookDownAngle = Mathf.Clamp(m_lookDownAngle, -m_maxLookDownAngle, m_maxLookDownAngle);
-		if(Input.GetButtonDown("Fire1") && Cursor.lockState == CursorLockMode.Locked){
+		if(Input.GetButtonDown("Attack")){
 			if(Cursor.lockState == CursorLockMode.Locked){
 				SetCursorState(CursorLockMode.None);
 			}

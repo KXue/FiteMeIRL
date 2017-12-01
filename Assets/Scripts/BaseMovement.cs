@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-public class BaseMovement : MonoBehaviour{
+public class BaseMovement : NetworkBehaviour{
 	#region Public Variables
 	public float m_gravity = 20.0f;
 	public float m_maxSpeed = 7.5f;
@@ -20,7 +20,9 @@ public class BaseMovement : MonoBehaviour{
 	#endregion
 	// Use this for initialization
 	void Start () {
-		Camera.main.GetComponent<ThirdPersonCamera>().Target = transform;
+		if(isLocalPlayer){
+			Camera.main.GetComponent<ThirdPersonCamera>().Target = transform;
+		}
 		m_sprintFactor = m_sprintSpeed / m_maxSpeed;
 		m_animationController = GetComponent<Animator>();
 		m_characterController = GetComponent<CharacterController>();
@@ -29,7 +31,7 @@ public class BaseMovement : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update () {
-		// if(isLocalPlayer){
+		if(isLocalPlayer){
 			Vector2 movementXZ = MovementXZ();
 			m_moveDirection.x = movementXZ.x;
 			m_moveDirection.z = movementXZ.y;
@@ -38,7 +40,7 @@ public class BaseMovement : MonoBehaviour{
 			m_grounded = (m_characterController.Move(m_moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
 
 			transform.rotation = CalculateRotation();
-		// }
+		}
 	}
 	Quaternion CalculateRotation(){
 		Vector3 rotation = transform.rotation.eulerAngles;
