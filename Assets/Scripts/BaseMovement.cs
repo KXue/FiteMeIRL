@@ -8,10 +8,10 @@ public class BaseMovement : MonoBehaviour{
 	public float m_maxSpeed = 7.5f;
 	public float m_jumpSpeed = 8.0f;
 	public float m_sprintSpeed = 10.0f;
+	public float m_rotationSpeed = 40.0f;
 	#endregion
 	#region Private Variables
 	private float m_sprintFactor;
-	private bool m_jump = false;
 	private bool m_sprint = false;
 	private bool m_grounded = true;
 	private Vector3 m_moveDirection;
@@ -20,6 +20,7 @@ public class BaseMovement : MonoBehaviour{
 	#endregion
 	// Use this for initialization
 	void Start () {
+		Camera.main.GetComponent<ThirdPersonCamera>().Target = transform;
 		m_sprintFactor = m_sprintSpeed / m_maxSpeed;
 		m_animationController = GetComponent<Animator>();
 		m_characterController = GetComponent<CharacterController>();
@@ -33,8 +34,16 @@ public class BaseMovement : MonoBehaviour{
 			m_moveDirection.x = movementXZ.x;
 			m_moveDirection.z = movementXZ.y;
 			m_moveDirection.y = MovementY(m_moveDirection.y);
+			m_moveDirection = transform.TransformDirection(m_moveDirection);
 			m_grounded = (m_characterController.Move(m_moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
+
+			transform.rotation = CalculateRotation();
 		// }
+	}
+	Quaternion CalculateRotation(){
+		Vector3 rotation = transform.rotation.eulerAngles;
+		rotation.y += Input.GetAxis("Mouse X") * m_rotationSpeed * Time.deltaTime;
+		return Quaternion.Euler(rotation);
 	}
 	Vector2 MovementXZ(){
 		Vector2 inputXZ = HandleXZInput();
