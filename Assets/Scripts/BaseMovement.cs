@@ -16,6 +16,7 @@ public class BaseMovement : NetworkBehaviour{
 	private bool m_grounded = true;
 	private Vector3 m_moveDirection;
 	private Animator m_animationController;
+	private NetworkAnimator m_networkAnimationController;
 	private CharacterController m_characterController;
 	#endregion
 	// Use this for initialization
@@ -25,10 +26,17 @@ public class BaseMovement : NetworkBehaviour{
 		}
 		m_sprintFactor = m_sprintSpeed / m_maxSpeed;
 		m_animationController = GetComponent<Animator>();
+		m_networkAnimationController = GetComponent<NetworkAnimator>();
 		m_characterController = GetComponent<CharacterController>();
 		m_moveDirection = Vector3.zero;
 	}
-	
+    //Source: https://forum.unity.com/threads/animator-settrigger-networkanimator-settrigger-bug.370984/
+    void NetworkSyncTrigger(string triggerName){
+		m_networkAnimationController.SetTrigger(triggerName);
+
+        if (NetworkServer.active)
+            m_animationController.ResetTrigger(triggerName);
+	}
 	// Update is called once per frame
 	void Update () {
 		if(isLocalPlayer){
@@ -80,7 +88,7 @@ public class BaseMovement : NetworkBehaviour{
 	}
 	float MovementY(float currentMovementY){
 		if(m_grounded && Input.GetButtonDown("Jump")){
-			m_animationController.SetTrigger("Jump");
+			NetworkSyncTrigger("Jump");
 			currentMovementY = m_jumpSpeed;
 		}
 		else if(!m_grounded){
@@ -88,4 +96,5 @@ public class BaseMovement : NetworkBehaviour{
 		}
 		return currentMovementY;
 	}
+
 }

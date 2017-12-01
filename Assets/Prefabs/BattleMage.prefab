@@ -895,10 +895,10 @@ GameObject:
   - component: {fileID: 95110093063048108}
   - component: {fileID: 143084631414168438}
   - component: {fileID: 114637385808497350}
+  - component: {fileID: 114203627645723078}
   - component: {fileID: 114228884432401098}
   - component: {fileID: 114622113409712704}
   - component: {fileID: 114012188269252874}
-  - component: {fileID: 114203627645723078}
   m_Layer: 0
   m_Name: BattleMage
   m_TagString: Untagged
@@ -2079,7 +2079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Animator: {fileID: 95110093063048108}
-  m_ParameterSendBits: 15
+  m_ParameterSendBits: 3
   param0: 
   param1: 
   param2: 
@@ -2099,6 +2099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4028521169500248, guid: 51459ca440d15f24aa15b3394596eb10, type: 2}
   prefabSpawnPoint: {fileID: 1481704420021270}
+  m_fireBallSpeed: 30
 --- !u!114 &114228884432401098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2163,9 +2164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6412dcfca75df4571987d235a2f609d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gravity: 20
+  m_gravity: 35
   m_maxSpeed: 7.5
-  m_jumpSpeed: 8
+  m_jumpSpeed: 15
   m_sprintSpeed: 10
   m_rotationSpeed: 40
 --- !u!137 &137004448669049010
@@ -2429,4 +2430,4 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.1, z: 0}

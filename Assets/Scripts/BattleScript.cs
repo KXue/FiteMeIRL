@@ -1,35 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BattleScript : MonoBehaviour {
+public class BattleScript : NetworkBehaviour {
 
 	public Transform prefab;
 	public GameObject prefabSpawnPoint;
 	public float m_fireBallSpeed = 30.0f;
 	private bool m_isAttacking = false;
-
-	private Animator m_animator;
-
-	void Start() {
+	private NetworkAnimator m_networkAnimator;
+    private Animator m_animator;
+    void Start() {
 		m_animator = GetComponent<Animator>();
+		m_networkAnimator = GetComponent<NetworkAnimator>();
 	}
 
 	void Update() {
-		if(Input.GetButton("Fire2") && !m_isAttacking) {
-			m_animator.SetTrigger("isAttacking");
-			m_isAttacking = true;
-		}
+        if (isLocalPlayer)
+        {
+            if(Input.GetButton("Fire2") && !m_isAttacking) {
+                NetworkSyncTrigger("isAttacking");
+                m_isAttacking = true;
+            }
+        }
+    }
+    void NetworkSyncTrigger(string triggerName)
+    {
+        m_networkAnimator.SetTrigger(triggerName);
+
+        if (NetworkServer.active)
+            m_animator.ResetTrigger(triggerName);
+    }
+	[Command]
+	void CmdAttack(Quaternion bulletRotation){
+		GameObject fireBall = Instantiate(prefab, prefabSpawnPoint.transform.position, bulletRotation).gameObject;
+        fireBall.GetComponent<Rigidbody>().velocity = fireBall.transform.forward * m_fireBallSpeed;
+
+        NetworkServer.Spawn(fireBall);
+        Destroy(fireBall.gameObject, 2.0f);
+	}
+    public void CmdSpawnAttack() {
+		if(isLocalPlayer){
+            Quaternion bulletRotation = AimAtCrosshair();
+            CmdAttack(bulletRotation);
+        }
 	}
 
-	public void SpawnAttack() {
-		var fireBall = Instantiate(prefab, prefabSpawnPoint.transform.position, AimAtCrosshair());
-		fireBall.GetComponent<Rigidbody>().velocity = fireBall.transform.forward * m_fireBallSpeed;
-
-		Destroy(fireBall.gameObject, 2.0f);
-	}
-	public void EndAttack(){
-		m_isAttacking = false;
+	public void CmdEndAttack(){
+		if(isLocalPlayer){
+            m_isAttacking = false;
+        }
 	}
 
 	Quaternion AimAtCrosshair(){
