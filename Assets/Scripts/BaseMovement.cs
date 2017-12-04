@@ -22,7 +22,13 @@ public class BaseMovement : NetworkBehaviour{
 	// Use this for initialization
 	void Start () {
 		if(isLocalPlayer){
-			Camera.main.GetComponent<ThirdPersonCamera>().Target = transform;
+			ThirdPersonCamera cameraController = Camera.main.GetComponent<ThirdPersonCamera>();
+			if(cameraController.isActiveAndEnabled){
+				cameraController.Target = transform;
+			}else if(!cameraController.enabled){
+				cameraController.enabled = true;
+				cameraController.Target = transform;
+			}
 		}
 		m_sprintFactor = m_sprintSpeed / m_maxSpeed;
 		m_animationController = GetComponent<Animator>();

@@ -5,11 +5,8 @@ using UnityEngine.Networking;
 public class Health : NetworkBehaviour {
 	public const int m_maxHealth = 100;
 	public Image m_healthBar;
-	public Image m_serverHealthBar;
-	public Image m_clientHealthBar;
 	public bool m_destroyOnDeath;
 	public GameObject m_serverHealthCanvas;
-	public GameObject m_clientHealthCanvas;
 
     [SyncVar(hook = "OnChangeHealth")]
 	private int m_currentHealth = m_maxHealth;
@@ -18,11 +15,7 @@ public class Health : NetworkBehaviour {
 		if(isLocalPlayer){
 			m_spawnPoints = FindObjectsOfType<NetworkStartPosition>();
 			Destroy(m_serverHealthCanvas);
-			m_healthBar = m_clientHealthBar;
-		}
-		else{
-			Destroy(m_clientHealthCanvas);
-			m_healthBar = m_serverHealthBar;
+			m_healthBar = MenuManager.Instance.HealthBar;
 		}
 	}
 	public int CurrentHealth{

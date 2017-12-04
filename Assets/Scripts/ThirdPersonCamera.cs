@@ -39,26 +39,11 @@ public class ThirdPersonCamera : MonoBehaviour {
 	void Update(){
 		
 	}
-	//TODO: Move this somewhere better later
-	void SetCursorState(CursorLockMode wantedMode)
-    {
-        Cursor.lockState = wantedMode;
-        // Hide cursor when locking
-        Cursor.visible = (CursorLockMode.Locked != wantedMode);
-    }
 	void LateUpdate(){
 		m_zoom -= Input.GetAxis("Mouse ScrollWheel") * m_zoomSpeed * Time.deltaTime * Mathf.Abs(m_zoom);
 		m_lookDownAngle -= Input.GetAxis("Mouse Y") * m_rotationSpeed * Time.deltaTime;
 		m_zoom = Mathf.Clamp(m_zoom, m_minZoom, m_maxZoom);
 		m_lookDownAngle = Mathf.Clamp(m_lookDownAngle, -m_maxLookDownAngle, m_maxLookDownAngle);
-		if(Input.GetButtonDown("Attack")){
-			if(Cursor.lockState == CursorLockMode.Locked){
-				SetCursorState(CursorLockMode.None);
-			}
-			else{
-				SetCursorState(CursorLockMode.Locked);
-			}
-		}
 		if(m_target != null){
 			Quaternion rotation = CalculateCameraRotation(m_target);
 

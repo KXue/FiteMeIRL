@@ -26,7 +26,7 @@ public class BattleScript : NetworkBehaviour {
 	void Update() {
         if (isLocalPlayer)
         {
-            if(Input.GetButton("Fire2") && !m_isAttacking) {
+            if(Input.GetButton("Attack") && !m_isAttacking) {
                 NetworkSyncTrigger("isAttacking");
                 m_isAttacking = true;
             }
