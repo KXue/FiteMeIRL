@@ -566,7 +566,6 @@ GameObject:
   - component: {fileID: 223786607599604624}
   - component: {fileID: 114155241189892944}
   - component: {fileID: 114963001642533180}
-  - component: {fileID: 114061754234303864}
   m_Layer: 5
   m_Name: ServerHealth Bar Canvas
   m_TagString: Untagged
@@ -936,6 +935,7 @@ GameObject:
   - component: {fileID: 114622113409712704}
   - component: {fileID: 114012188269252874}
   - component: {fileID: 114768193419179868}
+  - component: {fileID: 82252664061533526}
   m_Layer: 0
   m_Name: BattleMage
   m_TagString: Untagged
@@ -2105,6 +2105,86 @@ Transform:
   m_Father: {fileID: 4268308909894284}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82252664061533526
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1833570369621514}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b57a5b81c8663e14bbf70a3cc6ff01ad, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95110093063048108
 Animator:
   serializedVersion: 3
@@ -2141,17 +2221,6 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
---- !u!114 &114061754234303864
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1415479513311192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea96664f1bbea4cfeb9cc628731622be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114155241189892944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2186,6 +2255,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4028521169500248, guid: 51459ca440d15f24aa15b3394596eb10, type: 2}
   prefabSpawnPoint: {fileID: 1481704420021270}
+  m_fireSounds:
+  - {fileID: 8300000, guid: da5aeec65dfce4d449024607b399a5ec, type: 3}
+  - {fileID: 8300000, guid: ca679721d8a1b6243acc9a7ce566789b, type: 3}
+  - {fileID: 8300000, guid: 4e44e54a7843332488751c1d44253487, type: 3}
+  - {fileID: 8300000, guid: 0b02c09b276fdeb40a0378331b9baef5, type: 3}
+  - {fileID: 8300000, guid: a2cb9f8f4930f7e48b48bf85834f464c, type: 3}
+  - {fileID: 8300000, guid: 074ccb664b11e1341a5ac9b972ea3ab8, type: 3}
   m_bulletSpace: 0.5
   m_fireBallSpeed: 40
 --- !u!114 &114228884432401098
@@ -2296,11 +2372,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_healthBar: {fileID: 114484113632427384}
-  m_serverHealthBar: {fileID: 114484113632427384}
-  m_clientHealthBar: {fileID: 0}
   m_destroyOnDeath: 0
   m_serverHealthCanvas: {fileID: 1415479513311192}
-  m_clientHealthCanvas: {fileID: 0}
 --- !u!114 &114963001642533180
 MonoBehaviour:
   m_ObjectHideFlags: 1

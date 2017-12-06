@@ -7,12 +7,15 @@ public class BattleScript : NetworkBehaviour {
 
 	public Transform prefab;
 	public GameObject prefabSpawnPoint;
+	public AudioClip [] m_fireSounds;
 	public float m_bulletSpace = 0.5f;
 	public float m_fireBallSpeed = 30.0f;
 	private bool m_isAttacking = false;
+	private AudioSource m_fireSoundSource;
 	private NetworkAnimator m_networkAnimator;
     private Animator m_animator;
     void Start() {
+		m_fireSoundSource = GetComponent<AudioSource>();
 		if(isLocalPlayer){
 			gameObject.layer = LayerMask.NameToLayer("Player");
 		}
@@ -51,6 +54,10 @@ public class BattleScript : NetworkBehaviour {
 		if(isLocalPlayer){
             Quaternion bulletRotation = AimAtCrosshair();
             CmdAttack(bulletRotation);
+			if(!m_fireSoundSource.isPlaying){
+				m_fireSoundSource.clip = m_fireSounds[Random.Range(0, m_fireSounds.Length)];
+				m_fireSoundSource.Play();
+			}
         }
 	}
 

@@ -9,6 +9,8 @@ public class MenuManager : MonoBehaviour {
     public GameState m_currentState;
     public InputField m_IPField;
     public Image m_HealthBar;
+    public AudioClip m_MenuMusic;
+    public AudioClip m_GameMusic;
     public Image HealthBar{
         get{
             return m_HealthBar;
@@ -41,6 +43,7 @@ public class MenuManager : MonoBehaviour {
     }
     public void ToTitle(){
         HideAllMenus();
+        ToMenuMusic();
         ShowMenu(GameState.Title);
     }
     public void ToNetworking(){
@@ -52,6 +55,7 @@ public class MenuManager : MonoBehaviour {
         NetworkManager.singleton.StartHost();
         HideAllMenus();
         EnableControls();
+        ToGameMusic();
         ShowMenu(GameState.Game);
     }
     public void JoinGame(){
@@ -59,6 +63,7 @@ public class MenuManager : MonoBehaviour {
         NetworkManager.singleton.StartClient();
         HideAllMenus();
         EnableControls();
+        ToGameMusic();
         ShowMenu(GameState.Game);
     }
     public void ToGameOver(){
@@ -88,6 +93,18 @@ public class MenuManager : MonoBehaviour {
         Transform startPosition = NetworkManager.singleton.GetStartPosition();
         Instantiate(NetworkManager.singleton.playerPrefab, startPosition.position, startPosition.rotation);
         UnpauseGame();
+    }
+    void ToGameMusic(){
+        AudioSource BackgroundAudio = Camera.main.GetComponent<AudioSource>();
+        BackgroundAudio.Stop();
+        BackgroundAudio.clip = m_GameMusic;
+        BackgroundAudio.Play();
+    }
+    void ToMenuMusic(){
+        AudioSource BackgroundAudio = Camera.main.GetComponent<AudioSource>();
+        BackgroundAudio.Stop();
+        BackgroundAudio.clip = m_MenuMusic;
+        BackgroundAudio.Play();
     }
     void Disconnect(){
         NetworkManager.singleton.StopHost();
